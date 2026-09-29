@@ -184,3 +184,19 @@ body{background:#20352e}
 @media(max-width:600px){
 .home-content{padding:22px 18px 28px}.home h1{font-size:clamp(61px,20vw,92px);margin:10px 0 16px}.home p{font-size:15px;margin-bottom:18px}.home-credit{margin-top:14px}.primary,.secondary{padding:15px 18px}.home-tools{margin-top:12px}}
 @media(min-width:1400px){.home-content{transform:translateY(-2vh)}.home-landscape{transform:scale(1.03);transform-origin:center bottom}}
+
+
+/* V4.1.2 — MOTOR DE JUGABILIDAD: CAPA DE INTERACCIÓN SOBERANA */
+#world{position:relative;isolation:isolate;overflow:hidden}
+#sceneArt{position:absolute;inset:0;z-index:0!important;pointer-events:none!important}
+#sceneArt *,#sceneArt:before,#sceneArt:after{pointer-events:none!important}
+#objects{position:absolute;inset:0;z-index:100!important;pointer-events:none!important}
+#objects .discover{position:absolute;z-index:101!important;pointer-events:auto!important;touch-action:manipulation;cursor:pointer}
+#objects .discover *{pointer-events:none}
+#luna{z-index:110!important;pointer-events:none!important}
+#speech{z-index:120!important;pointer-events:none}
+#hint{z-index:121!important;pointer-events:none}
+#discovery{z-index:130!important}
+#finish{z-index:140!important}
+.mission-strip{z-index:150!important;pointer-events:none}
+.mission-strip *{pointer-events:none}
