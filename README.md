@@ -1,24 +1,45 @@
-# PEQUEÑO CHAÑAR
+# VILLA PELÓN
 
 Juego infantil histórico-territorial sobre San Patricio del Chañar, Neuquén.
 
-## V0.1 — Primer prototipo jugable
+## ESTADO ACTUAL
 
-Objetivo del prototipo:
-- portada
-- Luna
-- primera escena territorial
-- descubrimientos táctiles
-- progreso de misión
-- sonido opcional
-- guardado local
-- diseño responsive
-- sin dependencias externas
+**V4 — BASE ESTRUCTURAL, FUNCIONAL Y NARRATIVA BLOQUEADA**
 
-## Estado histórico
+La V4 es el núcleo protegido del proyecto. Las futuras capas deben construirse sobre ella y no pueden romper sus contratos.
 
-La base narrativa inicial usa fuentes municipales, provinciales y académicas. Los hechos con contradicciones entre fuentes quedan fuera del prototipo hasta nueva verificación.
+### Regla suprema
 
-## Regla
+> **Toda capa futura debe ajustarse a la V4. La V4 no se ajusta a las capas futuras.**
 
-Primero verdad. Después belleza. Después juego.
+La arquitectura completa y las reglas de bloqueo están documentadas en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Núcleo protegido
+
+- 7 misiones conectadas en una sola historia.
+- 3 descubrimientos por misión.
+- Progresión inequívoca.
+- Guardado local.
+- Continuar / comenzar / reiniciar.
+- Final completo y posibilidad de volver a recorrer.
+- Interacción táctil, mouse y teclado básico.
+- Sonido opcional y voz.
+- Responsive.
+- HTML + CSS + JavaScript vanilla.
+- Sin backend, base de datos ni dependencias externas obligatorias.
+
+## Cadena narrativa protegida
+
+**RÍO → TERRITORIO → HUELLAS → AGUA → RIEGO → TIERRA → CHACRAS → TRABAJO → PERSONAS → FAMILIAS → COMUNIDAD → ESCUELA → CLUB → PRODUCCIÓN → VILLA PELÓN**
+
+## Regla de desarrollo
+
+**Identificar causa → corregir causa → probar → congelar.**
+
+No se agregan parches ni sistemas paralelos para resolver problemas.
+
+## Historia
+
+La base narrativa utiliza fuentes municipales, provinciales y académicas. Los hechos con contradicciones o incertidumbre deben mantenerse diferenciados de los hechos documentados.
+
+**Primero verdad. Después claridad. Después belleza. Después juego.**
