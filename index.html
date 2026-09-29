@@ -1,41 +1,78 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#d8c19b"><meta name="description" content="Villa Pelón — una pequeña aventura histórica inspirada en San Patricio del Chañar.">
-<title>VILLA PELÓN</title><link rel="stylesheet" href="src/styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#d8c19b">
+<meta name="description" content="Villa Pelón — una aventura infantil inspirada en la historia de San Patricio del Chañar.">
+<title>VILLA PELÓN</title>
+<link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
 <main id="app">
 <section id="home" class="screen home">
-  <div class="home-landscape"><i class="sun"></i><i class="home-barda"></i><i class="home-river"></i><i class="home-tree"></i></div>
+  <div class="home-landscape"><i class="sun"></i><i class="home-barda"></i><i class="home-river"></i><i class="home-tree"></i><div class="home-birds">⌁ ⌁</div></div>
   <div class="home-content">
-    <div class="badge">UNA HISTORIA DE TIERRA Y AGUA</div>
+    <div class="badge">UNA AVENTURA DE TIERRA Y AGUA</div>
     <h1>VILLA<br><span>PELÓN</span></h1>
-    <p>Acompañá a Luna a descubrir cómo un lugar puede transformarse.</p>
-    <button id="startBtn" class="primary">COMENZAR</button>
-    <button id="continueBtn" class="secondary hidden">CONTINUAR</button>
-    <div class="home-tools"><button id="soundBtn" class="icon-btn" aria-label="Sonido">🔊</button><button id="resetBtn" class="text-btn">Borrar progreso</button></div>
-    <div class="micro">Una aventura inspirada en la historia de San Patricio del Chañar.</div>
+    <p>Acompañá a Luna. Mirá, escuchá, tocá y descubrí cómo este lugar fue cambiando con el tiempo.</p>
+    <button id="startBtn" class="primary">▶ COMENZAR AVENTURA</button>
+    <button id="continueBtn" class="secondary hidden">↗ CONTINUAR</button>
+    <div class="home-tools">
+      <button id="soundBtn" class="icon-btn" aria-label="Activar o desactivar sonido">🔊</button>
+      <button id="voiceBtn" class="icon-btn" aria-label="Escuchar la introducción">🗣️</button>
+      <button id="resetBtn" class="text-btn">Borrar progreso</button>
+    </div>
+    <div class="micro">Inspirado en la historia de San Patricio del Chañar · pensado para jugar sin experiencia previa.</div>
   </div>
 </section>
 
 <section id="game" class="screen game hidden">
 <header class="hud">
-  <button id="menuBtn" class="hud-btn" aria-label="Menú">☰</button>
-  <div class="mission"><small id="missionNumber">MISIÓN 1</small><strong id="missionTitle">CONOCER EL TERRITORIO</strong><div class="progress"><span id="progressBar"></span></div></div>
-  <button id="gameSoundBtn" class="hud-btn" aria-label="Sonido">🔊</button>
+  <button id="menuBtn" class="hud-btn" aria-label="Volver al inicio">☰</button>
+  <div class="mission">
+    <small id="missionNumber">MISIÓN 1</small>
+    <strong id="missionTitle">CONOCER EL TERRITORIO</strong>
+    <div class="progress"><span id="progressBar"></span></div>
+  </div>
+  <button id="gameSoundBtn" class="hud-btn" aria-label="Activar o desactivar sonido">🔊</button>
 </header>
+
 <div id="world" class="world">
   <div id="sceneArt" class="scene-art"></div>
+  <div id="timeBadge" class="time-badge">AHORA</div>
   <div id="objects"></div>
-  <div class="luna" id="luna" aria-label="Luna"><div class="luna-hair"></div><div class="luna-face"></div><div class="luna-body"></div><div class="luna-shadow"></div></div>
+  <div class="luna" id="luna" aria-label="Luna">
+    <div class="luna-hair"></div><div class="luna-face"></div><div class="luna-body"></div>
+    <div class="luna-leg luna-leg-a"></div><div class="luna-leg luna-leg-b"></div><div class="luna-shadow"></div>
+  </div>
   <div id="speech" class="speech hidden"></div>
-  <div id="discovery" class="discovery-card hidden"><div id="discoveryIcon" class="discovery-icon">✦</div><div><small>DESCUBRISTE</small><h2 id="discoveryTitle"></h2><p id="discoveryText"></p></div><button id="closeDiscovery" class="close" aria-label="Cerrar">✓</button></div>
-  <div id="finish" class="finish hidden"><div class="finish-card"><div class="finish-mark">✦</div><small id="finishKicker">MISIÓN COMPLETA</small><h2 id="finishTitle"></h2><p id="finishText"></p><button id="nextBtn" class="primary">SEGUIR</button></div></div>
+  <div id="hint" class="hint"><span>👆</span><b>TOCÁ ALGO PARA EXPLORAR</b></div>
+
+  <div id="discovery" class="discovery-card hidden">
+    <div id="discoveryIcon" class="discovery-icon">✦</div>
+    <div class="discovery-copy"><small>DESCUBRISTE</small><h2 id="discoveryTitle"></h2><p id="discoveryText"></p></div>
+    <div class="discovery-actions">
+      <button id="listenDiscovery" class="mini-action" aria-label="Escuchar">🔊</button>
+      <button id="closeDiscovery" class="close" aria-label="Cerrar">✓</button>
+    </div>
+  </div>
+
+  <div id="finish" class="finish hidden">
+    <div class="finish-card">
+      <div class="finish-mark">✦</div>
+      <small id="finishKicker">MISIÓN COMPLETA</small>
+      <h2 id="finishTitle"></h2>
+      <p id="finishText"></p>
+      <div id="finishFact" class="finish-fact"></div>
+      <button id="nextBtn" class="primary">SEGUIR ▶</button>
+    </div>
+  </div>
 </div>
+
 <nav class="mission-strip" aria-label="Progreso de la historia"><div id="missionDots"></div></nav>
 </section>
 </main>
 <script src="src/app.js"></script>
-</body></html>
+</body>
+</html>
