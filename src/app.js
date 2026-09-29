@@ -31,7 +31,7 @@ const MISSIONS=[
 
 const KEY="villa_pelon_v3";
 const state=Object.assign({mission:0,found:[],sound:true},JSON.parse(localStorage.getItem(KEY)||"{}"));
-let activeObject=null, audio=null, voiceTimer=null;
+let activeObject=null, audio=null, voiceTimer=null, transitioning=false;
 
 const $=s=>document.querySelector(s);
 function save(){localStorage.setItem(KEY,JSON.stringify(state));$("#continueBtn").classList.toggle("hidden",state.found.length===0&&state.mission===0);updateSound();}
@@ -116,10 +116,10 @@ function discover(id){
 function updateProgress(){
  const n=missionFound();
  $("#progressBar").style.width=(n/3*100)+"%";
- if(n===3)setTimeout(showFinish,520);
+ if(n===3 && !transitioning){clearTimeout(voiceTimer);setTimeout(showFinish,350);}
 }
 function showFinish(){
- if(missionFound()!==3)return;
+ if(missionFound()!==3 || transitioning)return;
  const m=mission();
  $("#finishTitle").textContent=m.title;
  $("#finishText").textContent=m.intro;
@@ -140,21 +140,31 @@ function factFor(id){
  return facts[id];
 }
 function next(){
- if(state.mission<MISSIONS.length-1){state.mission++;save();renderMission();}
- else{
+ if(transitioning)return;
+ transitioning=true;
+ $("#finish").classList.add("hidden");
+ if(state.mission<MISSIONS.length-1){
+   state.mission++;
+   save();
+   renderMission();
+   setTimeout(()=>{transitioning=false;},450);
+   return;
+ } else{
   $("#finishTitle").textContent="HISTORIA COMPLETA";
   $("#finishText").textContent="Ahora podés volver a mirar Villa Pelón y reconocer el hilo que une agua, tierra, trabajo y comunidad.";
   $("#finishFact").textContent="DESAFÍO FINAL: ¿Podés recordar qué apareció primero: el agua, las chacras o el pueblo?";
   $("#nextBtn").textContent="↺ VOLVER A RECORRER";
   $("#finish").classList.remove("hidden");tone(520,.1);setTimeout(()=>tone(740,.25),110);
-  $("#nextBtn").onclick=()=>{state.mission=0;state.found=[];save();renderMission();$("#nextBtn").onclick=next;};
+  $("#nextBtn").onclick=()=>{transitioning=false;state.mission=0;state.found=[];save();renderMission();$("#nextBtn").onclick=next;
+$("#world").addEventListener("click",e=>{const b=e.target.closest(".discover");if(b)discover(b.dataset.id);});};
+  transitioning=false;
  }
 }
 function openGame(){state.mission=Math.min(state.mission,6);$("#home").classList.add("hidden");$("#game").classList.remove("hidden");renderMission();tone(480,.08);}
 $("#startBtn").onclick=()=>{state.mission=0;state.found=[];save();openGame();};
 $("#continueBtn").onclick=openGame;
 $("#menuBtn").onclick=()=>{$("#game").classList.add("hidden");$("#home").classList.remove("hidden");save();};
-$("#closeDiscovery").onclick=()=>{$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");};
+$("#closeDiscovery").onclick=()=>{$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");if(missionFound()===3)showFinish();};
 $("#listenDiscovery").onclick=()=>{if(activeObject)speak(activeObject.voice);tone(720,.06);};
 $("#nextBtn").onclick=next;
 $("#soundBtn").onclick=()=>{state.sound=!state.sound;save();tone(700,.07);};
