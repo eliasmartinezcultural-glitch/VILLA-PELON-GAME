@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#d9c29c">
+  <meta name="description" content="Pequeño Chañar — aventura histórica y territorial infantil.">
+  <title>PEQUEÑO CHAÑAR</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <main id="app" class="app">
+    <section id="home" class="screen home">
+      <div class="sun"></div>
+      <div class="home-content">
+        <div class="badge">UNA AVENTURA DE TERRITORIO</div>
+        <h1>PEQUEÑO<br><span>CHAÑAR</span></h1>
+        <p>Descubrí cómo un lugar fue cambiando con el agua, la tierra y las personas.</p>
+        <button id="startBtn" class="primary">COMENZAR</button>
+        <button id="continueBtn" class="secondary hidden">CONTINUAR</button>
+        <div class="home-tools">
+          <button id="soundBtn" class="icon-btn" aria-label="Activar o desactivar sonido">🔊</button>
+          <button id="resetBtn" class="text-btn">Reiniciar partida</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="game" class="screen game hidden" aria-live="polite">
+      <header class="hud">
+        <button id="menuBtn" class="hud-btn" aria-label="Volver al menú">☰</button>
+        <div class="mission">
+          <small>MISIÓN 1</small>
+          <strong>CONOCER EL TERRITORIO</strong>
+          <div class="progress"><span id="progressBar"></span></div>
+        </div>
+        <button id="gameSoundBtn" class="hud-btn" aria-label="Sonido">🔊</button>
+      </header>
+
+      <div id="scene" class="scene">
+        <div class="sky"></div>
+        <div class="horizon"></div>
+        <div class="barda barda-a"></div>
+        <div class="barda barda-b"></div>
+        <div class="ground"></div>
+
+        <button class="discover river" data-id="river" aria-label="Descubrir el río Neuquén">
+          <span class="river-label">RÍO</span>
+        </button>
+
+        <button class="discover wind" data-id="wind" aria-label="Descubrir el viento">
+          <span class="wind-lines">〰 〰 〰</span>
+        </button>
+
+        <button class="discover chanar" data-id="chanar" aria-label="Descubrir el chañar">
+          <span class="tree-crown"></span><span class="tree-trunk"></span>
+        </button>
+
+        <div class="luna" aria-label="Luna">
+          <div class="luna-hair"></div>
+          <div class="luna-face"></div>
+          <div class="luna-body"></div>
+          <div class="luna-shadow"></div>
+        </div>
+
+        <div id="speech" class="speech hidden"></div>
+        <div id="discovery" class="discovery-card hidden">
+          <div id="discoveryIcon" class="discovery-icon">✦</div>
+          <div>
+            <small>DESCUBRISTE</small>
+            <h2 id="discoveryTitle"></h2>
+            <p id="discoveryText"></p>
+          </div>
+          <button id="closeDiscovery" class="close">✓</button>
+        </div>
+
+        <div id="finish" class="finish hidden">
+          <div class="finish-card">
+            <div class="finish-mark">✦</div>
+            <h2>YA CONOCÉS<br>EL LUGAR</h2>
+            <p>El río, el viento y el chañar son parte de esta historia.</p>
+            <button id="nextBtn" class="primary">SEGUIR</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="src/app.js"></script>
+</body>
+</html>
