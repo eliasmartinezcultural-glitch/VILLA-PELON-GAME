@@ -123,3 +123,19 @@ button{font:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transpar
 }
 @media(min-width:1000px){.world{max-width:1250px;margin:auto}.hud{max-width:1250px;margin:auto}.game{background:#c3af86}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.finish{backdrop-filter:none}}
+
+
+/* V0.4 — mundo infantil ilustrado */
+.world{isolation:isolate}
+.world.theme-territory{background:#c5b083}.world.theme-tracks{background:#c0ad86}.world.theme-water{background:#b8a478}.world.theme-farm{background:#b69b68}.world.theme-people{background:#b49a6d}.world.theme-town{background:#a99169}.world.theme-today{background:#b19b75}
+.world:before{content:"";position:absolute;z-index:1;left:0;right:0;bottom:0;height:45%;pointer-events:none;background:radial-gradient(circle at 8% 20%,#c9a66c 0 2px,transparent 3px),radial-gradient(circle at 26% 58%,#8d704d 0 2px,transparent 3px),radial-gradient(circle at 52% 32%,#d3b47a 0 2px,transparent 3px),radial-gradient(circle at 76% 70%,#876c4a 0 2px,transparent 3px),radial-gradient(circle at 92% 42%,#d2b477 0 2px,transparent 3px);background-size:120px 95px,170px 120px,145px 110px,190px 135px,160px 105px;opacity:.55}
+.scene-art{position:absolute;inset:0;z-index:0;overflow:hidden}
+.scene-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 50%,#5c452820 100%)}
+.object-ruins span,.object-school span,.object-club span,.object-town span,.object-pump span,.object-intake span{font-size:clamp(48px,8vw,82px)}
+.object-tree span,.object-orchard span{font-size:clamp(58px,9vw,96px)}
+.object-potato span,.object-fruit span,.object-vineyard span{font-size:clamp(48px,7vw,76px)}
+.object-family span,.object-worker span{font-size:clamp(48px,7vw,78px)}
+.discover:after{content:"";position:absolute;inset:8% 5%;border:2px solid #fff5d533;border-radius:50%;transform:scale(.72);opacity:0;transition:.2s}
+.discover:hover:after,.discover:focus-visible:after,.discover.selected:after{opacity:1;transform:scale(1)}
+.luna:before{content:"";position:absolute;left:-15px;top:58px;width:8px;height:35px;background:#e8b48c;border-radius:10px;transform:rotate(20deg)}
+.luna:after{content:"";position:absolute;right:-7px;top:66px;width:8px;height:30px;background:#e8b48c;border-radius:10px;transform:rotate(-15deg)}
