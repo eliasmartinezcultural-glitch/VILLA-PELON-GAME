@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#d8c19b">
 <meta name="description" content="Villa Pelón — una aventura infantil inspirada en la historia de San Patricio del Chañar.">
 <title>VILLA PELÓN</title>
-<link rel="stylesheet" href="src/styles.css?v=4.1.2">
+<link rel="stylesheet" href="src/styles.css?v=5.0.0">
 </head>
 <body>
 <main id="app">
@@ -24,7 +24,7 @@
       <button id="resetBtn" class="text-btn">Borrar progreso</button>
     </div>
     <div class="micro">Inspirado en la historia de San Patricio del Chañar · pensado para jugar sin experiencia previa.</div>
-    <div class="home-credit"><span>VILLA PELÓN · V4</span><b>Una producción de Ocarina Producciones</b></div>
+    <div class="home-credit"><span>VILLA PELÓN · V5</span><b>Una producción de Ocarina Producciones</b></div>
   </div>
 </section>
 
@@ -36,7 +36,7 @@
     <strong id="missionTitle">CONOCER EL TERRITORIO</strong>
     <div class="progress"><span id="progressBar"></span></div>
   </div>
-  <button id="gameSoundBtn" class="hud-btn" aria-label="Activar o desactivar sonido">🔊</button>
+  <div class="hud-actions"><button id="journalBtn" class="hud-btn" aria-label="Abrir cuaderno">📖</button><button id="gameSoundBtn" class="hud-btn" aria-label="Activar o desactivar sonido">🔊</button></div>
 </header>
 
 <div id="world" class="world">
@@ -72,8 +72,15 @@
 </div>
 
 <nav class="mission-strip" aria-label="Progreso de la historia"><div id="missionDots"></div></nav>
+<div id="journal" class="overlay hidden" aria-hidden="true">
+  <div class="journal-card">
+    <header><div><small>CUADERNO DE LUNA</small><h2>Lo que vamos descubriendo</h2></div><button id="closeJournal" class="close">×</button></header>
+    <div class="journal-tabs"><button class="jtab active" data-tab="discoveries">Descubrimientos</button><button class="jtab" data-tab="timeline">Línea del tiempo</button><button class="jtab" data-tab="people">Personas y lugares</button></div>
+    <div id="journalBody" class="journal-body"></div>
+  </div>
+</div>
 </section>
 </main>
-<script src="src/app.js?v=4.1.2"></script>
+<script src="src/app.js?v=5.0.0"></script>
 </body>
 </html>
