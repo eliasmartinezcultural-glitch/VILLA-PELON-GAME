@@ -38,6 +38,10 @@ const MISSIONS = [
 
 const KEY="villa_pelon_v4";
 const UX_KEY="villa_pelon_ux_41";
+const DIFF_KEY="villa_pelon_difficulty_41";
+const DIFFICULTIES={easy:{label:"MUY SIMPLE",hint:true,quiz:false,sequence:false},medium:{label:"MEDIO",hint:true,quiz:true,sequence:true},hard:{label:"MUY DIFÍCIL",hint:false,quiz:true,sequence:true}};
+let difficulty=localStorage.getItem(DIFF_KEY)||"easy";
+if(!DIFFICULTIES[difficulty])difficulty="easy";
 const old=JSON.parse(localStorage.getItem(KEY)||"null");
 const state=old&&typeof old==="object"?Object.assign({mission:0,found:[],sound:true,answers:{},journalOpen:false},old):{mission:0,found:[],sound:true,answers:{},journalOpen:false};
 state.answers=state.answers&&typeof state.answers==="object"?state.answers:{};
@@ -55,11 +59,19 @@ function speak(text){if(!("speechSynthesis"in window)||!text)return;try{speechSy
 function introVoice(){speak("Bienvenido a Villa Pelón. Acompañá a Luna. Tocá lo que quieras explorar. Mirá, escuchá y descubrí la historia.");}
 function mission(){return MISSIONS[state.mission]}
 function keyFor(m,o){return m.id+"-"+o.id}
+function difficultyConfig(){return DIFFICULTIES[difficulty]||DIFFICULTIES.easy}
+function setDifficulty(d){if(!DIFFICULTIES[d])return;difficulty=d;localStorage.setItem(DIFF_KEY,d);document.querySelectorAll(".difficulty-option").forEach(b=>b.classList.toggle("active",b.dataset.difficulty===d));const badge=$("#difficultyBadge");if(badge)badge.textContent=difficultyConfig().label}
 function missionFound(){const m=mission();return m.objects.filter(o=>state.found.includes(keyFor(m,o))).length}
+function requiredObjects(){return 3}
+function difficultyHint(){
+ const cfg=difficultyConfig();
+ if(!cfg.hint){const h=$("#hint");if(h)h.querySelector("b").textContent="EXPLORÁ SIN PISTAS";return}
+}
+
 function updateDots(){let h="";MISSIONS.forEach((m,i)=>h+=`<span class="${i<state.mission?"done":i===state.mission?"current":"locked"}">${i<state.mission?"✓":i+1}</span>`);$("#missionDots").innerHTML=h}
 function renderMission(){
  clearTimeout(finishTimer);transitioning=false;activeObject=null;
- const m=mission();$("#missionNumber").textContent="MISIÓN "+m.id;$("#missionTitle").textContent=m.title;$("#timeBadge").textContent=m.time;$("#world").className="world theme-"+m.theme;$("#sceneArt").innerHTML=art(m.theme);
+ const m=mission();$("#missionNumber").textContent="MISIÓN "+m.id;$("#missionTitle").textContent=m.title;$("#timeBadge").textContent=m.time;$("#difficultyBadge").textContent=difficultyConfig().label;$("#world").className="world theme-"+m.theme;$("#sceneArt").innerHTML=art(m.theme);
  $("#objects").innerHTML=m.objects.map(o=>`<button class="discover object-${o.kind} ${state.found.includes(keyFor(m,o))?"found":""}" data-id="${o.id}" aria-label="Explorar ${o.name}"><span>${o.icon}</span><b>${o.name}</b><i>+</i></button>`).join("");
  $("#luna").className="luna luna-"+m.theme;$("#discovery").classList.add("hidden");$("#finish").classList.add("hidden");$("#nextBtn").disabled=false;$("#hint").classList.remove("hidden");
  $("#hint b").textContent=missionFound()?"TOCÁ OTRA COSA PARA SEGUIR":"TOCÁ ALGO PARA EXPLORAR";updateProgress();updateDots();save();
@@ -138,15 +150,16 @@ function openJournal(tab="discoveries"){
 }
 function closeJournal(){const box=$("#journal");if(!box)return;box.classList.add("hidden");box.setAttribute("aria-hidden","true");state.journalOpen=false;}
 function updateProgress(){const n=missionFound();$("#progressBar").style.width=(n/3*100)+"%";if(n===3)$("#hint b").textContent="¡MISIÓN COMPLETA!";else $("#hint b").textContent=n?"TOCÁ OTRA COSA PARA SEGUIR":"TOCÁ ALGO PARA EXPLORAR"}
-function showFinish(){if(missionFound()!==3||transitioning)return;$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");const m=mission();$("#finishKicker").textContent="MISIÓN "+m.id+" COMPLETA";$("#finishTitle").textContent=m.title;$("#finishText").textContent=m.bridge;$("#finishFact").textContent=factFor(m.id);
+function showFinish(){if(missionFound()!==requiredObjects()||transitioning)return;$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");const m=mission();$("#finishKicker").textContent="MISIÓN "+m.id+" COMPLETA";$("#finishTitle").textContent=m.title;$("#finishText").textContent=m.bridge;$("#finishFact").textContent=factFor(m.id);
  const quiz=QUIZZES[m.id-1], answered=state.answers[m.id];
+ if(!difficultyConfig().quiz){$("#quiz").classList.add("hidden");$("#nextBtn").disabled=false;$("#nextBtn").textContent=m.id===7?"↺ VOLVER A RECORRER":"SEGUIR LA HISTORIA ▶";$("#finish").classList.remove("hidden");return;}
  $("#quiz").classList.remove("hidden");$("#quizQuestion").textContent=quiz.q;$("#quizFeedback").textContent="";
  $("#quizOptions").innerHTML=quiz.options.map((x,i)=>`<button class="quiz-option ${answered===i?"chosen":""}" data-answer="${i}" ${answered!==undefined?"disabled":""}>${x}</button>`).join("");
  if(answered!==undefined) $("#quizFeedback").textContent=answered===quiz.correct?"✓ Luna lo anotó en su cuaderno.":"Podés revisarlo en el cuaderno antes de continuar.";
  $("#nextBtn").disabled=answered===undefined;$("#nextBtn").textContent=m.id===7?"↺ VOLVER A RECORRER":"SEGUIR LA HISTORIA ▶";$("#finish").classList.remove("hidden");tone(660,.09,"triangle",.04);setTimeout(()=>tone(880,.22,"triangle",.045),100)}
 function factFor(id){return ["El río es el hilo que une gran parte de la aventura.","Una mensura de 1913 registró la colonia Tratayen.","En 1969 comenzaron obras de sistematización y riego.","Las primeras cosechas incluyeron papas; después crecieron los frutales.","Un paisaje productivo también necesita personas y hogares.","El 21 de mayo de 1973 se creó la Comisión de Fomento.","La historia continúa: el paisaje y sus producciones siguieron cambiando."][id-1]}
 function answerQuiz(index){
- const m=mission(),quiz=QUIZZES[m.id-1];if(!quiz)return;
+ if(!difficultyConfig().quiz)return; const m=mission(),quiz=QUIZZES[m.id-1];if(!quiz)return;
  state.answers[m.id]=index;save();tone(index===quiz.correct?760:300,.16,index===quiz.correct?"triangle":"sawtooth",.04);
  $("#quizOptions").querySelectorAll(".quiz-option").forEach((b,i)=>{b.disabled=true;b.classList.toggle("correct",i===quiz.correct);b.classList.toggle("wrong",i===index&&i!==quiz.correct);});
  $("#quizFeedback").textContent=index===quiz.correct?"✓ Correcto. Luna agregó la respuesta a su cuaderno.":"No pasa nada. La respuesta queda marcada y podés seguir investigando.";
@@ -182,6 +195,7 @@ updateSound();save();
 (function initV41UX(){
   const ux=JSON.parse(localStorage.getItem(UX_KEY)||"{}");
   function hint(){
+    if(!difficultyConfig().hint){speak("En esta dificultad no hay pistas. Mirá con atención y probá por tu cuenta.");tone(300,.12,"sawtooth",.035);return}
     const m=mission();
     const next=m.objects.find(o=>!state.found.includes(keyFor(m,o)));
     if(!next){ speak("Ya encontraste todo. ¡Misión completa!"); return; }
@@ -193,6 +207,8 @@ updateSound();save();
   }
   function center(){const l=$("#luna");if(!l)return;l.style.left="46%";l.classList.add("walking");setTimeout(()=>l.classList.remove("walking"),420);tone(520,.06);}
   $("#hintBtn")?.addEventListener("click",hint);
+  document.querySelectorAll(".difficulty-option").forEach(b=>b.addEventListener("click",()=>setDifficulty(b.dataset.difficulty)));
+  setDifficulty(difficulty);
   $("#centerBtn")?.addEventListener("click",center);
   $("#missionDots")?.addEventListener("click",e=>{const dot=e.target.closest("span");if(!dot)return;const i=[...$("#missionDots").children].indexOf(dot);if(i<0||i>=state.mission||transitioning)return;state.mission=i;save();renderMission();tone(500,.06);});
   function showTutorial(){
