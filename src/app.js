@@ -37,6 +37,7 @@ const MISSIONS = [
 ];
 
 const KEY="villa_pelon_v4";
+const UX_KEY="villa_pelon_ux_41";
 const old=JSON.parse(localStorage.getItem(KEY)||"null");
 const state=old&&typeof old==="object"?Object.assign({mission:0,found:[],sound:true,answers:{},journalOpen:false},old):{mission:0,found:[],sound:true,answers:{},journalOpen:false};
 state.answers=state.answers&&typeof state.answers==="object"?state.answers:{};
@@ -175,3 +176,29 @@ $("#journal").addEventListener("click",e=>{if(e.target.id==="journal")closeJourn
 $("#resetBtn").onclick=()=>{if(confirm("¿Borrar todo el progreso?")){state.mission=0;state.found=[];state.answers={};save();$("#game").classList.add("hidden");$("#home").classList.remove("hidden")}};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(state.journalOpen){closeJournal();return}if(!$("#game").classList.contains("hidden"))$("#menuBtn").click()}});
 updateSound();save();
+
+
+/* V4.1 — JUGABILIDAD FAMILIAR Y SIMPLE */
+(function initV41UX(){
+  const ux=JSON.parse(localStorage.getItem(UX_KEY)||"{}");
+  function hint(){
+    const m=mission();
+    const next=m.objects.find(o=>!state.found.includes(keyFor(m,o)));
+    if(!next){ speak("Ya encontraste todo. ¡Misión completa!"); return; }
+    const hints={river:"Buscá donde se mueve el agua.",wind:"Mirá alrededor: el viento también deja pistas.",tree:"Hay una planta que tiene mucho que ver con este lugar.",ruins:"Buscá una huella de algo que existió antes.",path:"Seguí la pista del camino.",flood:"Pensá qué puede cambiar cuando el río crece.",pump:"Buscá algo que ayude al agua a subir.",canal:"El agua necesita un camino.",intake:"Hay un lugar donde el agua entra al sistema.",potato:"Buscá algo pequeño que salió de la tierra.",farm:"Mirá cómo está dividida la tierra.",orchard:"Hay árboles que cuentan una historia productiva.",worker:"Buscá la huella de las personas.",family:"Una casa puede guardar una historia.",parcel:"Mirá cómo se organiza la tierra.",town:"Buscá el lugar donde la comunidad se encuentra.",school:"Hay un lugar donde se aprende juntos.",club:"Hay un lugar para jugar y encontrarse.",vineyard:"Buscá las líneas de cultivo que llegaron después.",today:"Mirá el presente como una suma de todas las pistas."};
+    $("#speech").textContent="PISTA · "+(hints[next.kind]||("Todavía falta descubrir: "+next.name+"."));
+    $("#speech").classList.remove("hidden");
+    setTimeout(()=>$("#speech")?.classList.add("hidden"),3600);
+    tone(620,.08,"triangle",.035);
+  }
+  function center(){const l=$("#luna");if(!l)return;l.style.left="46%";l.classList.add("walking");setTimeout(()=>l.classList.remove("walking"),420);tone(520,.06);}
+  $("#hintBtn")?.addEventListener("click",hint);
+  $("#centerBtn")?.addEventListener("click",center);
+  $("#missionDots")?.addEventListener("click",e=>{const dot=e.target.closest("span");if(!dot)return;const i=[...$("#missionDots").children].indexOf(dot);if(i<0||i>=state.mission||transitioning)return;state.mission=i;save();renderMission();tone(500,.06);});
+  if(!ux.seen){
+    const tip=document.createElement("div");tip.className="micro-tutorial";
+    tip.innerHTML='<div class="micro-tutorial-card"><span class="tutorial-mark">✦</span><small>ASÍ SE JUEGA</small><h2>Mirar → tocar → descubrir</h2><p>No hay que saber jugar. Seguí tu curiosidad y Luna te va a acompañar.</p><button>ENTENDIDO · EMPECEMOS</button></div>';
+    document.body.appendChild(tip);
+    tip.querySelector("button").onclick=()=>{tip.remove();localStorage.setItem(UX_KEY,JSON.stringify({seen:true}));tone(620,.08);};
+  }
+})();
