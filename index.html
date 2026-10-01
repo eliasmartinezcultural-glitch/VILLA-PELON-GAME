@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#d8c19b">
 <meta name="description" content="Villa Pelón — una aventura infantil inspirada en la historia de San Patricio del Chañar.">
 <title>VILLA PELÓN</title>
-<link rel="stylesheet" href="src/styles.css?v=5.1.0">
+<link rel="stylesheet" href="src/styles.css?v=4.1.0">
 </head>
 <body>
 <main id="app">
@@ -16,6 +16,11 @@
     <div class="badge">UNA AVENTURA DE TIERRA Y AGUA</div>
     <h1>VILLA<br><span>PELÓN</span></h1>
     <p>Acompañá a Luna. Mirá, escuchá, tocá y descubrí cómo este lugar fue cambiando con el tiempo.</p>
+    <div class="how-to-play" aria-label="Cómo jugar">
+      <div><b>1</b><span>TOCÁ</span><small>lo que te llame la atención</small></div>
+      <div><b>2</b><span>DESCUBRÍ</span><small>personas, lugares y naturaleza</small></div>
+      <div><b>3</b><span>SEGUÍ</span><small>la historia de Villa Pelón</small></div>
+    </div>
     <button id="startBtn" class="primary">▶ COMENZAR AVENTURA</button>
     <button id="continueBtn" class="secondary hidden">↗ CONTINUAR</button>
     <div class="home-tools">
@@ -24,7 +29,7 @@
       <button id="resetBtn" class="text-btn">Borrar progreso</button>
     </div>
     <div class="micro">Inspirado en la historia de San Patricio del Chañar · pensado para jugar sin experiencia previa.</div>
-    <div class="home-credit"><span>VILLA PELÓN · V5.1</span><b>Una producción de Ocarina Producciones</b></div>
+    <div class="home-credit"><span>VILLA PELÓN · V4.1</span><b>Una producción de Ocarina Producciones</b></div>
   </div>
 </section>
 
@@ -41,7 +46,7 @@
 
 <div id="world" class="world">
   <div id="sceneArt" class="scene-art"></div>
-  <div id="timeBadge" class="time-badge">AHORA</div>
+  <div id="timeBadge" class="time-badge">AHORA</div><div class="game-version">V4.1</div>
   <div id="objects"></div>
   <div class="luna" id="luna" aria-label="Luna">
     <div class="luna-hair"></div><div class="luna-face"></div><div class="luna-body"></div>
@@ -49,6 +54,10 @@
   </div>
   <div id="speech" class="speech hidden"></div>
   <div id="hint" class="hint"><span>👆</span><b>TOCÁ ALGO PARA EXPLORAR</b></div>
+  <div class="quick-play" aria-label="Acciones rápidas">
+    <button id="hintBtn" title="Dame una pista">💡 <span>PISTA</span></button>
+    <button id="centerBtn" title="Volver a mirar el centro">◎ <span>MIRAR</span></button>
+  </div>
 
   <div id="discovery" class="discovery-card hidden">
     <div id="discoveryIcon" class="discovery-icon">✦</div>
@@ -87,6 +96,6 @@
 </div>
 </section>
 </main>
-<script src="src/app.js?v=5.1.0"></script>
+<script src="src/app.js?v=4.1.0"></script>
 </body>
 </html>
