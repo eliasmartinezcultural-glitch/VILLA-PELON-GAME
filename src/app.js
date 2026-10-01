@@ -195,10 +195,12 @@ updateSound();save();
   $("#hintBtn")?.addEventListener("click",hint);
   $("#centerBtn")?.addEventListener("click",center);
   $("#missionDots")?.addEventListener("click",e=>{const dot=e.target.closest("span");if(!dot)return;const i=[...$("#missionDots").children].indexOf(dot);if(i<0||i>=state.mission||transitioning)return;state.mission=i;save();renderMission();tone(500,.06);});
-  if(!ux.seen){
+  function showTutorial(){
+    if(ux.seen)return;
     const tip=document.createElement("div");tip.className="micro-tutorial";
     tip.innerHTML='<div class="micro-tutorial-card"><span class="tutorial-mark">✦</span><small>ASÍ SE JUEGA</small><h2>Mirar → tocar → descubrir</h2><p>No hay que saber jugar. Seguí tu curiosidad y Luna te va a acompañar.</p><button>ENTENDIDO · EMPECEMOS</button></div>';
     document.body.appendChild(tip);
     tip.querySelector("button").onclick=()=>{tip.remove();localStorage.setItem(UX_KEY,JSON.stringify({seen:true}));tone(620,.08);};
   }
+  $("#startBtn")?.addEventListener("click",()=>setTimeout(showTutorial,100),{once:true});
 })();
