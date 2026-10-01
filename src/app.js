@@ -64,7 +64,29 @@ function renderMission(){
  $("#hint b").textContent=missionFound()?"TOCÁ OTRA COSA PARA SEGUIR":"TOCÁ ALGO PARA EXPLORAR";updateProgress();updateDots();save();
  if(missionFound()===0){$("#speech").textContent=m.story;$("#speech").classList.remove("hidden");setTimeout(()=>$("#speech").classList.add("hidden"),4300)}else $("#speech").classList.add("hidden");
 }
-function art(theme){const water=["water","farm","people","town","today"].includes(theme),orchard=["farm","people","town","today"].includes(theme),town=["town","today"].includes(theme);return `<i class="sky"></i><i class="sun"></i><i class="barda barda-a"></i><i class="barda barda-b"></i><i class="ground"></i><i class="far"></i>${water?'<i class="scene-river"></i><i class="scene-canal"></i>':""}${orchard?'<i class="scene-trees"></i>':""}${town?'<i class="scene-houses"></i>':""}<i class="scene-wind"></i>`}
+function art(theme){
+ const water=["water","farm","people","town","today"].includes(theme);
+ const orchard=["farm","people","town","today"].includes(theme);
+ const town=["town","today"].includes(theme);
+ const farm=["farm","people","today"].includes(theme);
+ const old=["territory","tracks"].includes(theme);
+ return `
+ <i class="sky"></i><i class="sun"></i>
+ <i class="cloud cloud-a"></i><i class="cloud cloud-b"></i>
+ <i class="barda barda-a"></i><i class="barda barda-b"></i><i class="far"></i><i class="ground"></i>
+ <i class="distant-shrub shrub-a"></i><i class="distant-shrub shrub-b"></i>
+ ${water?'<i class="scene-river"></i><i class="scene-canal"></i><i class="water-glint glint-a"></i><i class="water-glint glint-b"></i>':""}
+ ${orchard?'<i class="scene-trees"></i><i class="tree-detail tree-a"></i><i class="tree-detail tree-b"></i><i class="tree-detail tree-c"></i>':""}
+ ${farm?'<i class="furrows"></i><i class="fence fence-a"></i><i class="fence fence-b"></i><i class="haystack"></i>':""}
+ ${town?'<i class="scene-houses"></i><i class="house-detail house-a"></i><i class="house-detail house-b"></i><i class="utility-pole"></i>':""}
+ ${old?'<i class="old-fence"></i><i class="stone stone-a"></i><i class="stone stone-b"></i>':""}
+ <i class="bush bush-a"></i><i class="bush bush-b"></i><i class="bush bush-c"></i>
+ <i class="reeds reeds-a"></i><i class="reeds reeds-b"></i>
+ <i class="bird bird-a">⌁</i><i class="bird bird-b">⌁</i>
+ <i class="scene-wind"></i><i class="dust dust-a"></i><i class="dust dust-b"></i>
+ ${theme==="today"?'<i class="vine-lines"></i><i class="orchard-row"></i>':""}
+ `;
+}
 function moveLunaTo(btn){if(!btn)return;const luna=$("#luna"),world=$("#world").getBoundingClientRect(),r=btn.getBoundingClientRect();const x=Math.max(5,Math.min(80,((r.left+r.width/2-world.left)/world.width)*100-5));luna.style.left=x+"%";luna.classList.add("walking");setTimeout(()=>luna.classList.remove("walking"),620)}
 function discover(id){
  if(transitioning)return;const m=mission(),o=m.objects.find(x=>x.id===id);if(!o)return;const btn=document.querySelector(`[data-id="${id}"]`);moveLunaTo(btn);activeObject=o;
