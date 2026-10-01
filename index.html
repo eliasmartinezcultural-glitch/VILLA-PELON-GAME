@@ -21,6 +21,12 @@
       <div><b>2</b><span>DESCUBRÍ</span><small>personas, lugares y naturaleza</small></div>
       <div><b>3</b><span>SEGUÍ</span><small>la historia de Villa Pelón</small></div>
     </div>
+    <div class="difficulty-title">ELEGÍ CÓMO QUERÉS JUGAR</div>
+    <div id="difficultyPicker" class="difficulty-picker" role="group" aria-label="Dificultad">
+      <button class="difficulty-option active" data-difficulty="easy"><b>🌱</b><span>MUY SIMPLE</span><small>Para descubrir sin presión</small></button>
+      <button class="difficulty-option" data-difficulty="medium"><b>🧭</b><span>MEDIO</span><small>Más pistas y desafíos</small></button>
+      <button class="difficulty-option" data-difficulty="hard"><b>🔥</b><span>MUY DIFÍCIL</span><small>Para explorar de verdad</small></button>
+    </div>
     <button id="startBtn" class="primary">▶ COMENZAR AVENTURA</button>
     <button id="continueBtn" class="secondary hidden">↗ CONTINUAR</button>
     <div class="home-tools">
@@ -37,7 +43,7 @@
 <header class="hud">
   <button id="menuBtn" class="hud-btn" aria-label="Volver al inicio">☰</button>
   <div class="mission">
-    <small id="missionNumber">MISIÓN 1</small>
+    <small id="missionNumber">MISIÓN 1</small><em id="difficultyBadge">MUY SIMPLE</em>
     <strong id="missionTitle">CONOCER EL TERRITORIO</strong>
     <div class="progress"><span id="progressBar"></span></div>
   </div>
