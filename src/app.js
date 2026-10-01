@@ -38,7 +38,8 @@ const MISSIONS = [
 
 const KEY="villa_pelon_v4";
 const old=JSON.parse(localStorage.getItem(KEY)||"null");
-const state=old&&typeof old==="object"?Object.assign({mission:0,found:[],sound:true},old):{mission:0,found:[],sound:true};
+const state=old&&typeof old==="object"?Object.assign({mission:0,found:[],sound:true,answers:{},journalOpen:false},old):{mission:0,found:[],sound:true,answers:{},journalOpen:false};
+state.answers=state.answers&&typeof state.answers==="object"?state.answers:{};
 state.mission=Math.max(0,Math.min(6,Number(state.mission)||0));
 state.found=Array.isArray(state.found)?state.found:[];
 let activeObject=null,audio=null,voiceTimer=null,finishTimer=null,transitioning=false;
@@ -59,7 +60,7 @@ function renderMission(){
  clearTimeout(finishTimer);transitioning=false;activeObject=null;
  const m=mission();$("#missionNumber").textContent="MISIÓN "+m.id;$("#missionTitle").textContent=m.title;$("#timeBadge").textContent=m.time;$("#world").className="world theme-"+m.theme;$("#sceneArt").innerHTML=art(m.theme);
  $("#objects").innerHTML=m.objects.map(o=>`<button class="discover object-${o.kind} ${state.found.includes(keyFor(m,o))?"found":""}" data-id="${o.id}" aria-label="Explorar ${o.name}"><span>${o.icon}</span><b>${o.name}</b><i>+</i></button>`).join("");
- $("#luna").className="luna luna-"+m.theme;$("#discovery").classList.add("hidden");$("#finish").classList.add("hidden");$("#hint").classList.remove("hidden");
+ $("#luna").className="luna luna-"+m.theme;$("#discovery").classList.add("hidden");$("#finish").classList.add("hidden");$("#nextBtn").disabled=false;$("#hint").classList.remove("hidden");
  $("#hint b").textContent=missionFound()?"TOCÁ OTRA COSA PARA SEGUIR":"TOCÁ ALGO PARA EXPLORAR";updateProgress();updateDots();save();
  if(missionFound()===0){$("#speech").textContent=m.story;$("#speech").classList.remove("hidden");setTimeout(()=>$("#speech").classList.add("hidden"),4300)}else $("#speech").classList.add("hidden");
 }
@@ -73,9 +74,61 @@ function discover(id){
  clearTimeout(voiceTimer);voiceTimer=setTimeout(()=>$("#speech").classList.add("hidden"),2600);
  if(first&&missionFound()===3){clearTimeout(finishTimer);finishTimer=setTimeout(showFinish,900)}
 }
+const QUIZZES=[
+ {q:"¿Qué elemento será una de las claves de toda esta historia?",options:["El viento","El agua","La nieve"],correct:1},
+ {q:"¿Qué quedó registrado en una mensura de 1913?",options:["La colonia Tratayen","El club del pueblo","Los primeros viñedos"],correct:0},
+ {q:"¿Qué comenzó a ocurrir en 1969?",options:["Se fundó la escuela","Se construyeron los primeros viñedos","Se regaron los primeros cultivos bombeando agua del río"],correct:2},
+ {q:"¿Qué cultivo aparece entre las primeras cosechas del área piloto?",options:["Papa","Café","Arroz"],correct:0},
+ {q:"¿Qué necesita una transformación del territorio además de agua?",options:["Personas y trabajo","Un puerto","Una estación de tren"],correct:0},
+ {q:"¿Qué ocurrió el 21 de mayo de 1973?",options:["Se creó la Comisión de Fomento","Se construyó la primera bocatoma","Se fundó el club"],correct:0},
+ {q:"¿Qué une las pistas de toda la aventura?",options:["Solo los edificios","Río, agua, tierra, trabajo y comunidad","Solo los cultivos"],correct:1}
+];
+const TIMELINE=[
+ ["1913","Una mensura registra la colonia Tratayen."],
+ ["1969","Comienzan experiencias de riego con bombeo de agua del río."],
+ ["1971","Se construye una primera bocatoma."],
+ ["1973","Se crea la Comisión de Fomento de San Patricio del Chañar."],
+ ["1975","Comienza a funcionar la Escuela Nº 273."],
+ ["1976","Se crea el Club Atlético San Patricio."],
+ ["Fines de los 90","Comienzan experiencias con vides en la zona."]
+];
+const PEOPLE=[
+ ["💧","El agua","La gran pista que conecta buena parte del recorrido."],
+ ["🌳","El chañar","Un árbol que forma parte de la identidad del lugar."],
+ ["🏫","La escuela","Uno de los espacios donde la comunidad construye futuro."],
+ ["⚽","El club","Un lugar de encuentro, juego y comunidad."]
+];
+function openJournal(tab="discoveries"){
+ const box=$("#journal");if(!box)return;
+ box.classList.remove("hidden");box.setAttribute("aria-hidden","false");state.journalOpen=true;
+ document.querySelectorAll(".jtab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+ const body=$("#journalBody");
+ if(tab==="timeline"){
+   body.innerHTML=TIMELINE.map(x=>`<article class="timeline-item"><b>${x[0]}</b><span>${x[1]}</span></article>`).join("");
+ }else if(tab==="people"){
+   body.innerHTML=PEOPLE.map(x=>`<article class="people-item"><div>${x[0]}</div><section><b>${x[1]}</b><span>${x[2]}</span></section></article>`).join("");
+ }else{
+   const found=[];
+   MISSIONS.forEach(m=>m.objects.forEach(o=>{if(state.found.includes(keyFor(m,o)))found.push([m.id,o.name,o.text,o.icon]);}));
+   body.innerHTML=found.length?found.map(x=>`<article class="journal-item"><div class="jicon">${x[3]}</div><section><small>MISIÓN ${x[0]}</small><b>${x[1]}</b><span>${x[2]}</span></section></article>`).join(""):`<div class="empty-journal"><strong>El cuaderno está esperando.</strong><span>Explorá el mundo y tocá objetos para convertirlos en recuerdos.</span></div>`;
+ }
+}
+function closeJournal(){const box=$("#journal");if(!box)return;box.classList.add("hidden");box.setAttribute("aria-hidden","true");state.journalOpen=false;}
 function updateProgress(){const n=missionFound();$("#progressBar").style.width=(n/3*100)+"%";if(n===3)$("#hint b").textContent="¡MISIÓN COMPLETA!";else $("#hint b").textContent=n?"TOCÁ OTRA COSA PARA SEGUIR":"TOCÁ ALGO PARA EXPLORAR"}
-function showFinish(){if(missionFound()!==3||transitioning)return;$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");const m=mission();$("#finishKicker").textContent="MISIÓN "+m.id+" COMPLETA";$("#finishTitle").textContent=m.title;$("#finishText").textContent=m.bridge;$("#finishFact").textContent=factFor(m.id);$("#nextBtn").textContent=m.id===7?"↺ VOLVER A RECORRER":"SEGUIR LA HISTORIA ▶";$("#finish").classList.remove("hidden");tone(660,.09,"triangle",.04);setTimeout(()=>tone(880,.22,"triangle",.045),100)}
+function showFinish(){if(missionFound()!==3||transitioning)return;$("#discovery").classList.add("hidden");$("#speech").classList.add("hidden");const m=mission();$("#finishKicker").textContent="MISIÓN "+m.id+" COMPLETA";$("#finishTitle").textContent=m.title;$("#finishText").textContent=m.bridge;$("#finishFact").textContent=factFor(m.id);
+ const quiz=QUIZZES[m.id-1], answered=state.answers[m.id];
+ $("#quiz").classList.remove("hidden");$("#quizQuestion").textContent=quiz.q;$("#quizFeedback").textContent="";
+ $("#quizOptions").innerHTML=quiz.options.map((x,i)=>`<button class="quiz-option ${answered===i?"chosen":""}" data-answer="${i}" ${answered!==undefined?"disabled":""}>${x}</button>`).join("");
+ if(answered!==undefined) $("#quizFeedback").textContent=answered===quiz.correct?"✓ Luna lo anotó en su cuaderno.":"Podés revisarlo en el cuaderno antes de continuar.";
+ $("#nextBtn").disabled=answered===undefined;$("#nextBtn").textContent=m.id===7?"↺ VOLVER A RECORRER":"SEGUIR LA HISTORIA ▶";$("#finish").classList.remove("hidden");tone(660,.09,"triangle",.04);setTimeout(()=>tone(880,.22,"triangle",.045),100)}
 function factFor(id){return ["El río es el hilo que une gran parte de la aventura.","Una mensura de 1913 registró la colonia Tratayen.","En 1969 comenzaron obras de sistematización y riego.","Las primeras cosechas incluyeron papas; después crecieron los frutales.","Un paisaje productivo también necesita personas y hogares.","El 21 de mayo de 1973 se creó la Comisión de Fomento.","La historia continúa: el paisaje y sus producciones siguieron cambiando."][id-1]}
+function answerQuiz(index){
+ const m=mission(),quiz=QUIZZES[m.id-1];if(!quiz)return;
+ state.answers[m.id]=index;save();tone(index===quiz.correct?760:300,.16,index===quiz.correct?"triangle":"sawtooth",.04);
+ $("#quizOptions").querySelectorAll(".quiz-option").forEach((b,i)=>{b.disabled=true;b.classList.toggle("correct",i===quiz.correct);b.classList.toggle("wrong",i===index&&i!==quiz.correct);});
+ $("#quizFeedback").textContent=index===quiz.correct?"✓ Correcto. Luna agregó la respuesta a su cuaderno.":"No pasa nada. La respuesta queda marcada y podés seguir investigando.";
+ $("#nextBtn").disabled=false;
+}
 function next(){
  if(transitioning)return;transitioning=true;clearTimeout(finishTimer);$("#finish").classList.add("hidden");
  if(state.mission<6){state.mission++;save();renderMission();setTimeout(()=>{transitioning=false},250);return}
@@ -92,6 +145,11 @@ $("#nextBtn").onclick=next;
 $("#soundBtn").onclick=()=>{state.sound=!state.sound;save();tone(700,.07)};
 $("#gameSoundBtn").onclick=()=>{state.sound=!state.sound;save();tone(700,.07)};
 $("#voiceBtn").onclick=introVoice;
-$("#resetBtn").onclick=()=>{if(confirm("¿Borrar todo el progreso?")){state.mission=0;state.found=[];save();$("#game").classList.add("hidden");$("#home").classList.remove("hidden")}};
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#game").classList.contains("hidden"))$("#menuBtn").click()});
+$("#journalBtn").onclick=()=>openJournal();
+$("#closeJournal").onclick=closeJournal;
+document.querySelectorAll(".jtab").forEach(b=>b.addEventListener("click",()=>openJournal(b.dataset.tab)));
+$("#quizOptions").addEventListener("click",e=>{const b=e.target.closest(".quiz-option");if(b)answerQuiz(Number(b.dataset.answer));});
+$("#journal").addEventListener("click",e=>{if(e.target.id==="journal")closeJournal();});
+$("#resetBtn").onclick=()=>{if(confirm("¿Borrar todo el progreso?")){state.mission=0;state.found=[];state.answers={};save();$("#game").classList.add("hidden");$("#home").classList.remove("hidden")}};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(state.journalOpen){closeJournal();return}if(!$("#game").classList.contains("hidden"))$("#menuBtn").click()}});
 updateSound();save();
