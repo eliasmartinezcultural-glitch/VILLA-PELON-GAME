@@ -200,3 +200,43 @@ body{background:#20352e}
 #finish{z-index:140!important}
 .mission-strip{z-index:150!important;pointer-events:none}
 .mission-strip *{pointer-events:none}
+
+/* V5 — PROFUNDIDAD DE EXPERIENCIA: CUADERNO + DESAFÍOS + HUD */
+.hud-actions{display:flex;justify-content:flex-end;gap:7px}
+.hud-actions .hud-btn{width:42px;height:42px}
+.overlay{position:absolute;z-index:300;inset:0;background:#17382fcc;display:grid;place-items:center;padding:18px;backdrop-filter:blur(6px)}
+.journal-card{width:min(94%,760px);max-height:86%;overflow:auto;background:#fff5dc;border:1px solid #d5bd91;border-radius:28px;box-shadow:0 25px 90px #0006;padding:20px}
+.journal-card header{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #dcc8a0;padding-bottom:14px}
+.journal-card header small{font-size:9px;font-weight:950;letter-spacing:.14em;color:#647468}
+.journal-card h2{margin:4px 0 0;font-size:25px;line-height:1}
+.journal-card .close{width:42px;height:42px;background:#304a3f;color:#fff5dc;font-size:27px;flex:none}
+.journal-tabs{display:flex;gap:7px;overflow:auto;padding:14px 0 8px}
+.jtab{padding:10px 13px;border-radius:999px;background:#ead9b4;color:#304238;font-size:12px;font-weight:850;white-space:nowrap}
+.jtab.active{background:#304a3f;color:#fff5dc}
+.journal-body{display:grid;gap:9px;padding-top:8px}
+.journal-item,.people-item,.timeline-item{display:flex;gap:13px;align-items:flex-start;padding:13px;border:1px solid #dcc8a0;border-radius:17px;background:#fffaf0}
+.jicon{width:44px;height:44px;border-radius:14px;background:#ead6a7;display:grid;place-items:center;font-size:23px;flex:none}
+.journal-item section,.people-item section{display:grid;gap:3px}
+.journal-item small{font-size:8px;letter-spacing:.1em;font-weight:950;color:#738078}
+.journal-item b,.people-item b{font-size:15px}
+.journal-item span,.people-item span,.timeline-item span{font-size:12px;line-height:1.35;color:#5d665f}
+.people-item>div{font-size:27px;width:44px;text-align:center}
+.timeline-item{align-items:center}.timeline-item b{min-width:78px;color:#355746;font-size:13px}.timeline-item span{font-weight:650}
+.empty-journal{padding:35px 15px;text-align:center;display:grid;gap:7px;color:#58665e}.empty-journal strong{font-size:17px;color:#304238}.empty-journal span{font-size:13px}
+.quiz{margin:17px 0 4px;padding:15px;border-radius:18px;background:#f0dfba;border:1px solid #d5bd91;text-align:left}
+.quiz>small{font-size:8px;font-weight:950;letter-spacing:.13em;color:#65746a}
+.quiz h3{font-size:16px;line-height:1.2;margin:5px 0 10px}
+#quizOptions{display:grid;gap:7px}
+.quiz-option{padding:11px 12px;border-radius:12px;text-align:left;background:#fff8e9;border:1px solid #d4c19a;color:#304238;font-size:12px;font-weight:750;min-height:44px}
+.quiz-option:hover:not(:disabled){border-color:#52735c;transform:translateY(-1px)}
+.quiz-option:disabled{cursor:default;opacity:.88}
+.quiz-option.correct{background:#dbe7d6;border-color:#6c8b69}
+.quiz-option.wrong{background:#ead3c5;border-color:#a66d56}
+.quiz-feedback{min-height:18px;padding-top:8px;font-size:11px;font-weight:800;color:#53655b}
+#nextBtn:disabled{opacity:.45;filter:grayscale(.35);cursor:not-allowed;box-shadow:none;transform:none}
+@media(max-width:600px){
+ .hud{grid-template-columns:48px 1fr auto;gap:4px;padding:7px 8px}.hud-actions{gap:4px}.hud-actions .hud-btn{width:39px;height:39px}
+ .journal-card{padding:15px;border-radius:22px}.journal-card h2{font-size:21px}.journal-tabs{margin-inline:-2px}
+ .journal-item,.people-item,.timeline-item{padding:11px}.timeline-item b{min-width:63px;font-size:11px}
+ .quiz{padding:12px}.quiz h3{font-size:15px}.quiz-option{font-size:11px}
+}
