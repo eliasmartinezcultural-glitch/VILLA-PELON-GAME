@@ -310,3 +310,17 @@ body{background:#20352e}
  .cloud{transform:scale(.7)!important}.distant-shrub{transform:scale(.7)}.fence{transform:scale(.65) rotate(-3deg);transform-origin:left bottom}.fence-b{transform:scale(.5) rotate(4deg);transform-origin:right bottom}
  .utility-pole{transform:scale(.7);transform-origin:bottom}.house-detail{transform:scale(.6)}.luna{width:90px;height:168px}
 }
+
+
+/* V4.1 — UX FAMILIAR: menos explicación, más acción */
+.how-to-play{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:min(520px,100%);margin:12px auto 4px}
+.how-to-play>div{display:grid;grid-template-columns:24px 1fr;grid-template-rows:auto auto;column-gap:6px;text-align:left;padding:8px 9px;border:1px solid #fff8d65c;background:#fff5dc38;border-radius:14px;backdrop-filter:blur(4px)}
+.how-to-play b{grid-row:1/3;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#304f42;color:#fff5dc;font-size:11px}
+.how-to-play span{font-size:9px;font-weight:950;letter-spacing:.08em;color:#20352e}.how-to-play small{font-size:8px;line-height:1.2;color:#52645b}
+.game-version{position:absolute;z-index:170;left:10px;bottom:62px;padding:5px 8px;border-radius:999px;background:#fff5dccf;border:1px solid #d5bd91;color:#304238;font-size:8px;font-weight:950;letter-spacing:.1em;box-shadow:0 4px 12px #493a2b20}
+.quick-play{position:absolute;z-index:160;left:10px;bottom:10px;display:flex;gap:6px}.quick-play button{min-width:58px;height:40px;padding:0 9px;border:1px solid #d3ba8c;border-radius:13px;background:#fff5dcdf;color:#304238;font-size:10px;font-weight:950;box-shadow:0 5px 0 #b99d6d;touch-action:manipulation}.quick-play button:active{transform:translateY(4px);box-shadow:0 1px 0 #b99d6d}
+.micro-tutorial{position:fixed;inset:0;z-index:999;background:#17382fb8;display:grid;place-items:center;padding:20px;backdrop-filter:blur(4px)}
+.micro-tutorial-card{width:min(420px,100%);padding:28px 22px;border-radius:26px;background:#fff5dc;border:1px solid #d4bd91;box-shadow:0 25px 90px #0007;text-align:center}
+.tutorial-mark{display:grid;place-items:center;width:54px;height:54px;margin:0 auto 10px;border-radius:18px;background:#304f42;color:#f6d47a;font-size:28px}
+.micro-tutorial-card small{font-size:9px;letter-spacing:.15em;font-weight:950;color:#66746b}.micro-tutorial-card h2{margin:7px 0;font-size:24px;color:#20352e}.micro-tutorial-card p{margin:0 auto 18px;max-width:310px;font-size:13px;line-height:1.45;color:#5b665f}.micro-tutorial-card button{width:100%;padding:14px;border:0;border-radius:14px;background:#304f42;color:#fff5dc;font-weight:950;box-shadow:0 5px 0 #162820}
+@media(max-width:600px){.how-to-play{gap:5px}.how-to-play>div{padding:7px 5px}.how-to-play small{font-size:7px}.game-version{bottom:57px;left:7px}.quick-play{bottom:7px;left:7px}.quick-play button{min-width:54px;height:38px}.micro-tutorial-card{padding:24px 18px}.micro-tutorial-card h2{font-size:21px}}
