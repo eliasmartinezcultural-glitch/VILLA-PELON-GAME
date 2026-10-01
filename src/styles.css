@@ -240,3 +240,73 @@ body{background:#20352e}
  .journal-item,.people-item,.timeline-item{padding:11px}.timeline-item b{min-width:63px;font-size:11px}
  .quiz{padding:12px}.quiz h3{font-size:15px}.quiz-option{font-size:11px}
 }
+
+/* V5.1 — DIRECCIÓN DE ARTE PROFUNDA / VILLA PELÓN */
+:root{
+ --pixel-ink:#26382f;--pixel-bark:#654c37;--pixel-leaf:#4e704d;--pixel-leaf2:#6f8751;
+ --pixel-sand:#b99462;--pixel-water:#4e9fba;--pixel-sky:#8bc6d7;--pixel-cream:#fff3d1;
+}
+.world{image-rendering:auto;background:#b89b6d;box-shadow:inset 0 0 80px #3e302222}
+.world:after{height:30%;background:
+ radial-gradient(circle at 12% 35%,#654c3733 0 2px,transparent 3px),
+ radial-gradient(circle at 37% 62%,#fff0c733 0 2px,transparent 3px),
+ radial-gradient(circle at 72% 48%,#654c3722 0 2px,transparent 3px),
+ repeating-linear-gradient(174deg,transparent 0 28px,#7f624044 29px 31px);opacity:.45}
+.sky{background:linear-gradient(180deg,#75bdd3 0%,#b8d8d3 58%,#d2c08e 100%)}
+.sun{background:radial-gradient(circle,#fff5bf 0 48%,#f0c96e 50% 62%,transparent 64%);box-shadow:0 0 45px #fff0a955}
+.cloud{position:absolute;width:120px;height:32px;background:#fff9df88;border-radius:50px;filter:blur(.2px)}
+.cloud:before,.cloud:after{content:"";position:absolute;background:#fff9df99;border-radius:50%}
+.cloud:before{width:45px;height:45px;left:18px;bottom:3px}.cloud:after{width:60px;height:52px;right:18px;bottom:0}
+.cloud-a{top:17%;left:9%;animation:cloudDrift 18s linear infinite}.cloud-b{top:29%;right:10%;transform:scale(.7);opacity:.55;animation:cloudDrift 24s linear infinite reverse}
+.distant-shrub{position:absolute;bottom:40%;width:130px;height:42px;background:radial-gradient(ellipse at 20% 80%,#657a5144 0 32%,transparent 34%),radial-gradient(ellipse at 50% 75%,#657a5144 0 36%,transparent 38%),radial-gradient(ellipse at 80% 80%,#657a5144 0 30%,transparent 32%);z-index:2}
+.shrub-a{left:3%}.shrub-b{right:5%;transform:scale(.8)}
+.scene-river{background:linear-gradient(150deg,#438fab,#68b9c9 45%,#438eaa);box-shadow:inset 0 12px 0 #9ed8df55,inset 0 -12px 0 #286c8655,0 8px 20px #315a6844}
+.scene-canal{box-shadow:inset 0 4px #b6e1e355,0 6px 10px #315a6844}
+.water-glint{position:absolute;width:28px;height:5px;border-radius:50%;background:#e6f7e9aa;z-index:5;animation:glint 2.5s ease-in-out infinite}
+.glint-a{left:27%;bottom:29%}.glint-b{left:51%;bottom:19%;animation-delay:1.1s}
+.scene-trees{filter:drop-shadow(0 8px 4px #44372233)}
+.tree-detail{position:absolute;z-index:6;width:54px;height:95px;bottom:20%}
+.tree-detail:before{content:"";position:absolute;left:23px;bottom:0;width:12px;height:52px;background:#705039;border-radius:6px}
+.tree-detail:after{content:"";position:absolute;left:0;top:0;width:54px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 38%,#769052 0 18%,transparent 19%),radial-gradient(circle at 65% 35%,#5f7e4b 0 22%,transparent 23%),radial-gradient(circle at 50% 65%,#496d49 0 29%,transparent 30%)}
+.tree-a{right:33%;transform:scale(.7)}.tree-b{right:23%;transform:scale(.9)}.tree-c{right:13%;transform:scale(.62)}
+.furrows{position:absolute;left:8%;right:8%;bottom:7%;height:25%;z-index:2;opacity:.65;background:repeating-linear-gradient(173deg,transparent 0 15px,#805e3d66 16px 19px)}
+.fence{position:absolute;z-index:7;width:160px;height:60px;bottom:19%;background:repeating-linear-gradient(90deg,transparent 0 29px,#674b36 30px 37px);border-top:7px solid #674b36;border-bottom:7px solid #674b36;transform:rotate(-3deg)}
+.fence-a{left:2%}.fence-b{right:4%;transform:rotate(4deg) scale(.75)}
+.haystack{position:absolute;z-index:6;left:31%;bottom:18%;width:58px;height:38px;border-radius:60% 60% 10px 10px;background:repeating-linear-gradient(90deg,#c79b58 0 5px,#a87d48 6px 8px);box-shadow:0 8px 7px #513a2533}
+.scene-houses{filter:drop-shadow(0 8px 5px #513a2533)}
+.house-detail{position:absolute;z-index:7;width:55px;height:34px;bottom:30%;background:#ead3a4;border:3px solid #78583e;box-shadow:inset 0 -8px #c58459}
+.house-detail:before{content:"";position:absolute;left:-7px;top:-17px;border-left:34px solid transparent;border-right:34px solid transparent;border-bottom:20px solid #79513e}
+.house-detail:after{content:"";position:absolute;left:22px;bottom:0;width:12px;height:22px;background:#79513e}
+.house-a{left:39%;transform:scale(.8)}.house-b{left:52%;transform:scale(.6)}
+.utility-pole{position:absolute;z-index:5;right:28%;bottom:27%;width:7px;height:125px;background:#5b4938;box-shadow:-16px 7px #5b4938}
+.utility-pole:after{content:"";position:absolute;top:5px;left:-24px;width:56px;height:5px;background:#5b4938}
+.old-fence{position:absolute;z-index:5;left:9%;bottom:31%;width:240px;height:50px;border-top:4px solid #76573d;border-bottom:4px solid #76573d;opacity:.65;background:repeating-linear-gradient(90deg,transparent 0 38px,#76573d 39px 44px)}
+.stone{position:absolute;z-index:8;width:25px;height:14px;border-radius:50%;background:#806f59;box-shadow:inset 5px -3px #a38e6f}
+.stone-a{left:29%;bottom:13%}.stone-b{right:35%;bottom:16%;transform:scale(.7)}
+.bush{position:absolute;z-index:9;width:62px;height:35px;border-radius:60% 60% 35% 35%;background:radial-gradient(circle at 30% 55%,#6c884f 0 30%,transparent 31%),radial-gradient(circle at 62% 42%,#547747 0 38%,transparent 39%),radial-gradient(circle at 85% 60%,#789054 0 26%,transparent 27%)}
+.bush-a{left:16%;bottom:11%}.bush-b{left:65%;bottom:13%;transform:scale(.75)}.bush-c{right:8%;bottom:10%;transform:scale(.9)}
+.reeds{position:absolute;z-index:8;width:80px;height:70px;bottom:17%;background:repeating-linear-gradient(80deg,transparent 0 9px,#5f784d 10px 13px);clip-path:polygon(0 100%,5% 20%,10% 100%,25% 0,30% 100%,48% 12%,53% 100%,68% 2%,73% 100%,88% 18%,93% 100%)}
+.reeds-a{left:28%}.reeds-b{right:28%;transform:scale(.7)}
+.bird{position:absolute;z-index:11;color:#304b43;font-size:25px;font-weight:900;animation:birdFly 7s ease-in-out infinite}
+.bird-a{left:18%;top:25%}.bird-b{right:27%;top:16%;font-size:19px;animation-delay:2.2s}
+.dust{position:absolute;z-index:4;width:7px;height:7px;border-radius:50%;background:#e6c98d88;animation:dustFloat 5s ease-in-out infinite}
+.dust-a{left:48%;bottom:27%}.dust-b{left:73%;bottom:34%;animation-delay:2s}
+.vine-lines{position:absolute;z-index:4;right:0;bottom:9%;width:48%;height:30%;opacity:.45;background:repeating-linear-gradient(0deg,transparent 0 24px,#6b543944 25px 27px)}
+.orchard-row{position:absolute;z-index:5;right:6%;bottom:17%;width:42%;height:18%;background:radial-gradient(circle at 10% 50%,#547749 0 13%,transparent 14%),radial-gradient(circle at 32% 50%,#66834d 0 13%,transparent 14%),radial-gradient(circle at 54% 50%,#547749 0 13%,transparent 14%),radial-gradient(circle at 76% 50%,#66834d 0 13%,transparent 14%);opacity:.75}
+.luna{width:96px;height:174px}
+.luna-face{box-shadow:inset 12px -8px #d59b78,0 2px 0 #8b5e4b33}
+.luna-face:before{content:"";position:absolute;left:10px;top:18px;width:7px;height:7px;border-radius:50%;background:#3a2b2a;box-shadow:21px 0 #3a2b2a}
+.luna-face:after{content:"";position:absolute;left:15px;top:31px;width:20px;height:7px;border-bottom:2px solid #704d40;border-radius:0 0 50% 50%}
+.luna-hair{box-shadow:inset -9px -6px #352824}
+.luna-hair:before,.luna-hair:after{content:"";position:absolute;background:#49352e;border-radius:50%}
+.luna-hair:before{width:23px;height:42px;left:-7px;top:22px}.luna-hair:after{width:23px;height:48px;right:-7px;top:18px}
+.luna-body{background:linear-gradient(90deg,#c75f50,#df8060 55%,#bd574c);box-shadow:inset 0 -8px #a94d45}
+.luna-body:after{content:"";position:absolute;left:29px;top:3px;width:7px;height:70px;background:#f0d08a;border-radius:6px}
+.luna-leg{box-shadow:inset 0 -5px #302723}
+.luna-leg:after{content:"";position:absolute;bottom:-2px;left:-5px;width:23px;height:8px;border-radius:8px;background:#302723}
+.luna:after{right:-10px}
+@keyframes cloudDrift{50%{transform:translateX(35px)}}@keyframes glint{50%{opacity:.25;transform:scale(.7)}}@keyframes birdFly{50%{transform:translate(28px,-12px)}}@keyframes dustFloat{50%{transform:translate(18px,-12px);opacity:.15}}
+@media(max-width:600px){
+ .cloud{transform:scale(.7)!important}.distant-shrub{transform:scale(.7)}.fence{transform:scale(.65) rotate(-3deg);transform-origin:left bottom}.fence-b{transform:scale(.5) rotate(4deg);transform-origin:right bottom}
+ .utility-pole{transform:scale(.7);transform-origin:bottom}.house-detail{transform:scale(.6)}.luna{width:90px;height:168px}
+}
